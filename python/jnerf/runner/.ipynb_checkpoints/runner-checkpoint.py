@@ -59,7 +59,7 @@ class Runner():
         self.W = self.image_resolutions[0]
         self.H = self.image_resolutions[1]
 
-    def train(self,args):
+    def train(self):
         for i in tqdm(range(self.start, self.tot_train_steps)):
             self.cfg.m_training_step = i
             img_ids, rays_o, rays_d, rgb_target = next(self.dataset["train"])
@@ -81,8 +81,7 @@ class Runner():
                 psnr=mse2psnr(self.val_img(i))
                 print("STEP={} | LOSS={} | VAL PSNR={}".format(i,loss.mean().item(), psnr))
         self.save_ckpt(os.path.join(self.save_path, "params.pkl"))
-        self.test(True)
-        self.render(True, args.save_dir)
+        self.test()
     
     def test(self, load_ckpt=False):
         if load_ckpt:

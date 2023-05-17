@@ -63,7 +63,7 @@ def main():
         print('Not support yet!')
 
     if args.task == "train":
-        runner.train()
+        runner.train(args)
     elif args.task == "test":
         runner.test(True)
     elif args.task == "render":

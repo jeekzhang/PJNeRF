@@ -7,7 +7,7 @@ from jnerf.ops.code_ops import *
 from jnerf.dataset.dataset import jt_srgb_to_linear, jt_linear_to_srgb
 from jnerf.utils.config import get_cfg, save_cfg
 from jnerf.utils.registry import build_from_cfg,NETWORKS,SCHEDULERS,DATASETS,OPTIMS,SAMPLERS,LOSSES
-from jnerf.models.losses.mse_loss import img2mse, mse2psnr
+from jnerf.models.losses.mse_loss import img2mse, mse2psnr, calculate_ssim
 from jnerf.dataset import camera_path
 import cv2
 
@@ -81,7 +81,6 @@ class Runner():
                 psnr=mse2psnr(self.val_img(i))
                 print("STEP={} | LOSS={} | VAL PSNR={}".format(i,loss.mean().item(), psnr))
         self.save_ckpt(os.path.join(self.save_path, "params.pkl"))
-        self.test()
     
     def test(self, load_ckpt=False):
         if load_ckpt:
@@ -91,12 +90,13 @@ class Runner():
             self.dataset["test"] = build_from_cfg(self.cfg.dataset.test, DATASETS)
         if not os.path.exists(os.path.join(self.save_path, "test")):
             os.makedirs(os.path.join(self.save_path, "test"))
-        mse_list=self.render_test(save_path=os.path.join(self.save_path, "test"))
+        mse_list, ssim_list=self.render_test(save_path=os.path.join(self.save_path, "test"))
         if self.dataset["test"].have_img:
             tot_psnr=0
             for mse in mse_list:
                 tot_psnr += mse2psnr(mse)
             print("TOTAL TEST PSNR===={}".format(tot_psnr/len(mse_list)))
+            print("TOTAL TEST SSIM===={}".format(sum(ssim_list)/len(ssim_list)))
 
     def render(self, load_ckpt=True, save_path=None):
         if load_ckpt:
@@ -163,6 +163,7 @@ class Runner():
         if save_path is None:
             save_path = self.save_path
         mse_list = []
+        ssim_list = []
         print("rendering testset...")
         for img_i in tqdm(range(0,self.dataset["test"].n_images,1)):
             with jt.no_grad():
@@ -182,7 +183,9 @@ class Runner():
                 mse_list.append(img2mse(
                 jt.array(img), 
                 jt.array(img_tar)).item())
-        return mse_list
+                ssim_list.append(calculate_ssim(img, img_tar))
+
+        return mse_list, ssim_list
 
     def save_img(self, path, img, alpha=None):
         if alpha is not None:

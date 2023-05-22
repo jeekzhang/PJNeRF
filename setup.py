@@ -19,7 +19,7 @@ setup(
     package_dir={'': 'python'},
     package_data={'': [ "*"+"/*"*i for i in range(20)]},
     install_requires=[
-        "jittor>=1.3.5.25",
+        "jittor==1.3.6.10",
         "numpy",
         "tqdm",
         "opencv-python",

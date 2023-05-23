@@ -19,3 +19,4 @@ python run_net.py --config-file ./projects/ngp/configs/ngp_ikun.py
 #### 参考代码仓库
 
 [Jittor/JNeRF(github.com)](https://github.com/Jittor/JNeRF)
+

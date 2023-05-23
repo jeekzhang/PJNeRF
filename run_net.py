@@ -35,13 +35,14 @@ def main():
 
     runner = Runner()
 
-    start_time = time.time()
-    runner.train()
-    end_time = time.time()
-    train_time = end_time - start_time
-    print("train_time: ", train_time, "s")
+    # start_time = time.time()
+    # runner.train()
+    # end_time = time.time()
+    # train_time = end_time - start_time
+    # print("train_time: ", train_time, "s")
 
-    runner.test(True)
+    # runner.test(True)
+    runner.generate_img(num=5)
     # runner.render(True, args.save_dir)
 
 if __name__ == "__main__":

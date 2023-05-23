@@ -187,6 +187,23 @@ class Runner():
 
         return mse_list, ssim_list
 
+    def generate_img(self, load_ckpt=True, num=10):
+        cam_path = camera_path.path_spherical(num)
+        if load_ckpt:
+            assert os.path.exists(self.ckpt_path), "ckpt file does not exist: "+self.ckpt_path
+            self.load_ckpt(self.ckpt_path)
+        if not os.path.exists(os.path.join(self.save_path, "generate")):
+            os.makedirs(os.path.join(self.save_path, "generate"))
+        cam_path = camera_path.path_spherical()
+        with jt.no_grad():
+            count=0
+            for pose in tqdm(cam_path):
+                img = self.render_img_with_pose(pose)
+                img = (img*255+0.5).clip(0, 255).astype('uint8')
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                cv2.imwrite(self.save_path+f"/generate/{count}.png", img)
+                count+=1
+
     def save_img(self, path, img, alpha=None):
         if alpha is not None:
             img = np.concatenate([img, alpha], axis=-1)

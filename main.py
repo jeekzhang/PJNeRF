@@ -14,8 +14,8 @@ def generate_loader():
         transforms.RandomRotation(10),
         transforms.ToTensor(),  # 将图片转换为Tensor,归一化至[0,1]
     ])
-    train_set = ImageFolder('./train', transform=transform)
-    test_set = ImageFolder('./test', transform=transform)
+    train_set = ImageFolder('./data/train', transform=transform)
+    test_set = ImageFolder('./data/test', transform=transform)
 
     train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True)  # 转变为dataloader形式，方便载入模型
     test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False)

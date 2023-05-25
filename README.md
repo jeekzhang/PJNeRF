@@ -13,7 +13,7 @@ pip install -r requirements.txt -i https://pypi.mirrors.ustc.edu.cn/simple/
 #### 运行代码（训练、测试、生成视频一体化）
 
 ```bash
-python run_net.py --config-file ./projects/ngp/configs/ngp_ikun.py
+python run_net.py --config-file ./projects/ngp/configs/ngp_bear.py
 ```
 
 #### 参考代码仓库

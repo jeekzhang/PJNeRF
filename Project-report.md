@@ -73,32 +73,68 @@ Instant-NGP通过Hash编码和定制化的优化，其号称能在5秒训练出�
 
 - 环境配置方便，仅需下载`requirements.txt`中所需的库即可运行样例代码
 
-- 训练和测试速度高效、效果优异。在飞浆AI平台提供的A100显卡上训练lego（100张图，主要超参设置为batch_size=4096、tot_train_steps = 40000、n_training_steps = 16）仅需，且测试集的PSNR达到了
+- 训练和测试速度高效、效果优异。在飞浆AI平台提供的V100显卡上训练lego（100张训练集，主要超参设置为batch_size=4096、tot_train_steps = 40000、n_training_steps = 16）仅需约400s，且测试集的PSNR达到了36，SSIM达到0.98（如下图所示）
 
+  <div align=left><img width = '800' height ='500' src ="./img/lego_train.png"/></div>
   
+  渲染效果：
+  
+  <div style="display:flex;">
+    <img src="img/lego.gif" ><div>
+
+
 
 #### 数据介绍
+
+
 
 #### 结果展示与评估
 
 ##### 主观结果展示
 
+<div style="display:flex;">
+  <img src="img/ikun.gif" style="width:33%;">
+  <img src="img/bear.gif" style="width:33%;">
+  <img src="img/seg_bear.gif" style="width:33%;">
+</div>
+
 ##### 数值评估
 
+|   超参/评估值    | ikun      | bear      | seg_bear  | lego      |
+| :--------------: | --------- | --------- | --------- | --------- |
+|    batch_size    | 4096      | 4096      | 4096      | 4096      |
+| tot_train_steps  | 8192      | 40000     | 10000     | 40000     |
+| n_training_steps | 16        | 16        | 16        | 16        |
+| background_color | [0, 0, 0] | [0, 0, 0] | [0, 0, 0] | [0, 0, 0] |
+|     **PSNR**     | 28.22     | 28.00     | 31.23     | 36.39     |
+|     **SSIM**     | 0.92      | 0.91      | 0.94      | 0.98      |
+
+
+
 ##### 训练/渲染时间
+
+| 数据量\时间   | ikun  | bear  | seg_bear |
+| ------------- | ----- | ----- | -------- |
+| 训练集（张）  | 44    | 60    | 60       |
+| 训练时间（s） | 109.2 | 514.6 | 191.0    |
+| 渲染时间（s） | 44.6  | 67.1  | 86.2     |
+
+
+
+##### 运行结果截图
+
+
 
 ### 二、扩展部分：NeRF探索性研究
 
 
 
 
-### 三、文件说明
+### 文件说明
 
 
 
-
-
-### 四、参考
+### 参考
 
 1. [Jittor/JNeRF(github.com)](https://github.com/Jittor/JNeRF)
 2. [Jittor开源: JNeRF带你5秒训好NeRF](https://cg.cs.tsinghua.edu.cn/jittor/news/2022-06-01-12-52-00-00-jnerf/)

@@ -45,7 +45,9 @@
 
 #### 概述
 
+为了完成本次NeRF重建的任务，我们选取Instant-NGP作为重建方法。同时，我们使用百度飞桨AI平台来搭建环境，配置参数为（GPU：16G V100）。由于远程平台不支持实时渲染GUI的展示，以及Instant-NGP在该平台上的配置冲突，我们选用两套代码来进行重建：Instant-NGP源码由于实时渲染展示，JNeRF复现的Instant-NGP作为云端开发的代码。
 
+在重建物体的选取上，我们先对ikun公仔进行了实拍和数据集的构建，尽管评测指标说得过去，但主观效果并不是很好。所以，我们再构建了一个bear玩偶的数据集，取得了较好的评测指标和主观效果。为了得到更好的效果，我们将bear的图片进行了图像分割的预处理，使PSNR这一指标超过了30这一基准线，且之前bear重建中出现的雾感被大大消减。
 
 #### 所选方法介绍
 
@@ -89,6 +91,7 @@ Instant-NGP通过Hash编码和定制化的优化，其号称能在5秒训练出�
 #### 数据介绍
 
 NerF重建3D模型基于来自同一物体不同角度2D的图片信息、摄像角度信息以及每张图片所对应的位姿数据信息。所以要使用NerF进行3D重建休要拍摄处理获得待建模物体的不同角度的图片，然后对图片进行匹配计算获得摄像角度和位姿数据信息。  
+
 首先是获得同一物体不同角度的多张图片。考虑到精细的JNerF建模需要用到十几张甚至一百多张图片分别作为训练集、验证集和测试集，直接用手机进行拍摄照片的方式是复杂的。同时直接拍摄出来的图片之间的连贯性无法得到保障，这样3D重建的效果也会受到影响。
 
 因此，我们采用围绕物体拍摄视频，然后将视频按照一定的频率裁剪出连续图片的方式来获得不同角度的多张图片。裁剪获得的图片可能存在有模糊，出界等问题，如果这些图片参与后续的3D重建会极大地影响重建效果，因此要对裁剪出来的图片进行挑选。
@@ -97,8 +100,8 @@ NerF重建3D模型基于来自同一物体不同角度2D的图片信息、摄像
   <img src="./img/出界.jpg" style="width:50%;">
   <img src="./img/模糊.jpg" style="width:50%;">
 </div>
-
 处理得到不同角度的多张图片之后就需要根据这些连贯的图片计算出各张图片的位姿数据信息。我们计算图片位姿信息采用的是colmap函数工具。  
+
 colmap函数库提供了一整套的提取特征、匹配、生成稀疏点云和进行捆绑调整的功能。首先，我们获取COLMAP数据库的路径，该数据库由图片集生成。如果要生成文本输出，则设置文本输出路径为数据库路径去掉扩展名并添加"\_text"后缀。然后，设置稀疏点云的输出路径为数据库路径去掉扩展名并添"\_sparse"后缀。运行COLMAP的特征提取命令，提取图像特征并将结果保存到数据库。
 
 根据命令行参数设置匹配器类型，并运行COLMAP的特征匹配命令，执行图像特征的匹配。创建稀疏点云输出文件夹。运行COLMAP的稀疏重建命令，根据数据库中的特征和匹配结果生成稀疏点云。运行COLMAP的捆绑调整命令，对稀疏点云进行捆绑调整。创建文本输出文件夹。运行COLMAP的模型转换命令，将稀疏点云转换为文本格式输出。
@@ -175,11 +178,15 @@ def run_colmap(args):
   <img src="img/bear.gif" style="width:33%;">
   <img src="img/seg_bear.gif" style="width:33%;">
 </div>
+**视频展示链接**：https://www.bilibili.com/video/BV1jP411X7JH
+
 
 
 ##### 数值评估
 
-|   超参/评估值    | ikun      | bear      | seg_bear  | lego(base) |
+由于飞桨平台的Paddle框架与torch的不兼容，故这里只选取PSNR和SSIM这两个指标进行评估
+
+| 重要超参/评估值  | ikun      | bear      | seg_bear  | lego(base) |
 | :--------------: | --------- | --------- | --------- | ---------- |
 |    batch_size    | 4096      | 4096      | 4096      | 4096       |
 | tot_train_steps  | 8192      | 40000     | 10000     | 40000      |
@@ -188,9 +195,21 @@ def run_colmap(args):
 |     **PSNR**     | 28.22     | 28.00     | 31.23     | 36.39      |
 |     **SSIM**     | 0.92      | 0.91      | 0.94      | 0.98       |
 
+以上的调参过程仅针对PSNR最优进行。但以bear为例，如果要使得SSIM更优，可尝试将background_color设置为[197,207,212]（桌子的颜色），获得的原图和生成图对比效果如下：
+
+<div align=left><img width = '800' height ='500' src ="./img/bear_train_ssim.png"/></div>
+
+获得的评测指标为：
+
+<div align=left><img width = '600' height ='200' src ="./img/bear_ssim.png"/></div>
+
+尽管PSNR仅为个位数，但SSIM已经接近0.97
+
 
 
 ##### 训练/渲染时间
+
+以上面表格中的最优PSNR参数为准：
 
 | 数据量\时间   | ikun  | bear  | seg_bear |
 | ------------- | ----- | ----- | -------- |
@@ -227,8 +246,9 @@ seg_bear数据集：
 
 ### 参考
 
-1. [Jittor/JNeRF(github.com)](https://github.com/Jittor/JNeRF)
-2. [Jittor开源: JNeRF带你5秒训好NeRF](https://cg.cs.tsinghua.edu.cn/jittor/news/2022-06-01-12-52-00-00-jnerf/)
+1. [NVlabs/instant-ngp (github.com)](https://github.com/NVlabs/instant-ngp)
+2. [Jittor/JNeRF (github.com)](https://github.com/Jittor/JNeRF)
+3. [Jittor开源: JNeRF带你5秒训好NeRF](https://cg.cs.tsinghua.edu.cn/jittor/news/2022-06-01-12-52-00-00-jnerf/)
 
 </font>
 

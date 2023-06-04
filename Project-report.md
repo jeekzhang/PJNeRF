@@ -83,8 +83,9 @@ Instant-NGP通过Hash编码和定制化的优化，其号称能在5秒训练出�
   
   渲染效果：
   
-  <div style="display:flex;">
-    <img src="img/lego.gif" ><div>
+    <div style="display:flex;">
+      <img src="img/lego.gif" ><div>
+
 
 
 

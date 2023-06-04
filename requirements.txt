@@ -10,3 +10,8 @@ trimesh
 plyfile
 open3d
 scikit-image
+commentjson
+opencv-python-headless
+pybind11
+pyquaternion
+scipy

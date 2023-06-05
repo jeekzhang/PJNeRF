@@ -33,27 +33,24 @@
 
 &nbsp;
 <center>
-专&ensp;业：<u>计算机科学与技术</u> &ensp;
-专&ensp;业：<u>计算机科学与技术</u> &ensp;
-专&ensp;业：<u>计算机科学与技术</u> &ensp;
-专&ensp;业：<u>计算机科学与技术</u> &ensp;
+<font size="1.8">专&ensp;业：<u>计算机科学与技术</u> &ensp;</font>
+<font size="1.8">专&ensp;业：<u>计算机科学与技术</u> &ensp;</font>
+<font size="1.8">专&ensp;业：<u>计算机科学与技术</u> &ensp;</font>
+<font size="1.8">专&ensp;业：<u>计算机科学与技术</u> &ensp;</font>
 </center>
+
 
 &nbsp;
 <center>
 日&ensp;&ensp;期：<u>2023/06/04</u>
 </center>
-
-
-
-
 </font>
 
 ## 一、基础部分：使用NeRF进行身边物体的重建
 
 ### 概述
 
-为了完成本次NeRF重建的任务，我们选取Instant-NGP作为重建方法。同时，我们使用百度飞桨AI平台来搭建环境，配置参数为（GPU：16G V100）。由于远程平台不支持实时渲染GUI的展示，以及Instant-NGP在该平台上的配置冲突，我们选用两套代码来进行重建：Instant-NGP源码由于实时渲染展示，JNeRF复现的Instant-NGP作为云端开发的代码。
+在前期baseline的选取上，我们每位成员都对具体的一个代码仓库进行尝试，以选出适配性好、功能性强的基础代码。最终，为了完成本次NeRF重建的任务，我们选取Instant-NGP作为重建方法。同时，我们使用百度飞桨AI平台来搭建环境，配置参数为（GPU：16G V100）。由于远程平台不支持实时渲染GUI的展示，以及Instant-NGP在该平台上的配置冲突，我们选用两套代码来进行重建：Instant-NGP源码由于实时渲染展示，JNeRF复现的Instant-NGP作为云端开发的代码。
 
 在重建物体的选取上，我们先对ikun公仔进行了实拍和数据集的构建，尽管评测指标较优，但主观效果并不是很好。所以，我们再构建了一个bear玩偶的数据集，取得了较好的评测指标和主观效果。为了得到更好的效果，我们在拓展部分运用SAM大模型将bear的图片进行了图像分割的预处理，使PSNR这一指标超过了30这一基准线，且之前bear重建中出现的雾感被大大消减。
 
@@ -338,6 +335,7 @@ CLoMaP的主要优势在于其封闭形式的解决方案。由于不需要迭�
 综上，我们在本实验的拓展部分中，成功地利用了NeRF进行数据增强，使用大模型进行数据集的分割预处理，以及运用CLoMaP进行逆位姿求解。虽然各部分都存在一些挑战，如NeRF的计算成本较高，大模型的预处理需要足够的计算资源，CLoMaP的逆位姿求解需要精确的特征点和姿态先验信息，但我们通过合理的设计和优化，成功地克服了这些挑战，达到了我们的目标。
 
 
+
 #### 求解算法
 
 ##### SLAM算法估计
@@ -368,18 +366,42 @@ CLoMaP的主要优势在于其封闭形式的解决方案。由于不需要迭�
 
 ### 文件说明
 
+```
+PJNeRF
+  |__ data 		        //训练所需数据集
+  		|__ lego		//初始乐高数据集
+  		|__ bear		//初始小熊数据集
+  		|__ seg_bear	//SAM模型分割后数据集
+  		|__ ikun		//ikun公仔数据集
+  		|__ model		//高达模型数据集	     
+  |__ img               //报告展示所用到的图片文件
+  |__ licenses 		           
+  |__ logs              //训练和测试的生成文件，包括模型、图片和视频
+  |__ projects          //存放config超参文件
+  |__ python 			//JNeRF实现代码
+  |__ Project-report.md //报告撰写文档
+  |__ run_net.py 		//前台运行代码
+  |__ requirements.txt 	//本代码仓库配置文件
+```
+
 
 
 ### 成员分工
 
+叶兴松：JNeRF仓库的跑通、基础部分代码构建、数据集优化、逆位姿应用研究、报告书写
 
+秦铮：instant-ngp仓库的跑通、数据集处理代码、数据集制作与优化、逆位姿应用研究、报告书写
+
+蔡哲飙：pytorch-nerf仓库的跑通、大模型分割应用研究、报告书写
+
+段钧文：NeuMan仓库的跑通、数据增强应用研究、数据集优化、报告书写
 
 ### 参考/鸣谢
 1. [NVlabs/instant-ngp (github.com)](https://github.com/NVlabs/instant-ngp)
 2. [Jittor/JNeRF (github.com)](https://github.com/Jittor/JNeRF)
 3. [Jittor开源: JNeRF带你5秒训好NeRF](https://cg.cs.tsinghua.edu.cn/jittor/news/2022-06-01-12-52-00-00-jnerf/)
 4. https://www.bilibili.com/video/BV1yy4y1C7gj
-
+5. https://aistudio.baidu.com/
 
 </font>
 

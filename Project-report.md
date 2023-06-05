@@ -376,7 +376,7 @@ PJNeRF
   		|__ model		//高达模型数据集	     
   |__ img               //报告展示所用到的图片文件
   |__ licenses 		           
-  |__ logs              //训练和测试的生成文件，包括模型、图片和视频
+  |__ logs              //训练和测试的生成文件，包括模型(pkl)、图片和视频
   |__ projects          //存放config超参文件
   |__ python 			//JNeRF实现代码
   |__ Project-report.md //报告撰写文档

@@ -1,51 +1,3 @@
-<font face="宋体">
-
-&nbsp;
-**<font size=12><p align="center">计算机图形学项目报告</p></font>**
-&nbsp;
-<font size=6><p align="center">Project3 【神经辐射场(NeRF)实践】 </p></font>
-&nbsp;&nbsp;
-&nbsp;&nbsp;
-
-<div align=center><img width = '200' height ='200' src ="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.huawenku.cn%2Fuploads%2F150601%2Fxiaohui.jpg&refer=http%3A%2F%2Fwww.huawenku.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1617160664&t=761914188dd5b3da1e91e3a495453919"/></div>
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-<font size=2>
-
-&nbsp;
-<center>
-学生姓名：<u>叶兴松</u> 
-    &nbsp&nbsp
-学生姓名：<u>秦铮</u> 
-    &nbsp&nbsp
-学生姓名：<u>蔡哲飙</u> 
-    &nbsp&nbsp
-学生姓名：<u>段钧文</u> 
-</center>
-
-&nbsp;
-<center>
-学&ensp;号：<u>20307130227</u> &ensp;
-学&ensp;号：<u>20307130169</u> &ensp;
-学&ensp;号：<u>20307130001</u> &ensp;
-学&ensp;号：<u>20307130235</u> &ensp;
-</center>
-
-&nbsp;
-<center>
-<font size="1.8">专&ensp;业：<u>计算机科学与技术</u> &ensp;</font>
-<font size="1.8">专&ensp;业：<u>计算机科学与技术</u> &ensp;</font>
-<font size="1.8">专&ensp;业：<u>计算机科学与技术</u> &ensp;</font>
-<font size="1.8">专&ensp;业：<u>计算机科学与技术</u> &ensp;</font>
-</center>
-
-
-&nbsp;
-<center>
-日&ensp;&ensp;期：<u>2023/06/04</u>
-</center>
-</font>
-
 ## 一、基础部分：使用NeRF进行身边物体的重建
 
 ### 概述
@@ -412,18 +364,6 @@ PJNeRF
 
 
 
-### 成员分工
-
-叶兴松：JNeRF仓库的跑通、基础部分代码构建、数据集优化、逆位姿应用研究、报告书写
-
-秦铮：instant-ngp仓库的跑通、数据集处理代码、数据集制作与优化、逆位姿应用研究、报告书写
-
-蔡哲飙：pytorch-nerf仓库的跑通、大模型分割应用研究、报告书写
-
-段钧文：NeuMan仓库的跑通、数据增强应用研究、数据集优化、报告书写
-
-
-
 ### 参考/鸣谢
 
 1. [NVlabs/instant-ngp (github.com)](https://github.com/NVlabs/instant-ngp)
@@ -432,7 +372,5 @@ PJNeRF
 4. [https://zhuanlan.zhihu.com/p/622484771](https://zhuanlan.zhihu.com/p/622484771)
 5. https://www.bilibili.com/video/BV1yy4y1C7gj
 6. https://aistudio.baidu.com/
-
-</font>
 
 

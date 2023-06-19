@@ -1,4 +1,4 @@
-# PJ wwith NeRF（Graphics-project）
+# PJ with NeRF（Graphics-project）
 Computer Graphics Course (COMP130018.01) Project-3 of Fudan University.
 
 ## Part1--基于JNeRF的实拍物重建

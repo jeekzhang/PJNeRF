@@ -18,10 +18,10 @@ python run_net.py --config-file ./projects/ngp/configs/ngp_bear.py
 
 #### 数据处理
 
-新建文件夹存放.mp4视频文件(以/mydata/chick.mp4为例)  
+新建文件夹存放.mp4视频文件(以/data/chick.mp4为例，文件太大未上传)  
 将视频切分为图片
 ```bash
-python .\scripts\colmap2nerf.py --video_in .\mydata\chick.mp4 --video_fps 2 --run_colmap --aabb_scale 16 --overwrite
+python .\scripts\colmap2nerf.py --video_in .\data\chick.mp4 --video_fps 2 --run_colmap --aabb_scale 16 --overwrite
 ```
 挑选好图片后生成位姿信息
 ```bash

@@ -25,7 +25,7 @@ python .\scripts\colmap2nerf.py --video_in .\data\chick.mp4 --video_fps 2 --run_
 ```
 挑选好图片后生成位姿信息
 ```bash
-cd mydata
+cd data
 python ..\scripts\colmap2nerf.py --colmap_matcher exhaustive --run_colmap --aabb_scale 16 --overwrite
 ```
 在transforms.json文件中将会有相机信息和所有图片位姿信息，可自行将数据划分为训练集，验证集和测试集用以3D重建和测评
